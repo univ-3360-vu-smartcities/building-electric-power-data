@@ -148,6 +148,8 @@ def aggregate_over_time(df: pd.DataFrame, period: str='W') \
     plabels = [ts.isoformat() for ts in periods.groups.keys()]
     means_by_period = []
     for date, subframe in periods:
+        if len(subframe) == 0:
+            continue
         grouped = subframe.groupby(subframe.index.time)
         period_mean = grouped.mean()
         period_mean.set_index(pd.to_datetime(period_mean.index, format='%H:%M:%S').time, inplace=True)
